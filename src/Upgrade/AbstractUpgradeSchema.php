@@ -30,7 +30,9 @@ abstract class AbstractUpgradeSchema extends AbstractYamlSchema implements Upgra
             
             /** @var Column $column */
             foreach ($model->getColumns() as $column) {
-                $table->modifyColumn(
+                $method = $table->tableColumnExists($tableName, $column->getName()) ? 'modifyColumn' : 'addColumn';
+    
+                $table->$method(
                     $tableName,
                     $column->getName(),
                     [
@@ -39,8 +41,9 @@ abstract class AbstractUpgradeSchema extends AbstractYamlSchema implements Upgra
                         'options' => $column->getOptions()->toArray(),
                         'comment' => $column->getComment()
                     ]
-                    
+    
                 );
+                
             }
 
             foreach ($model->getIndexes() as $indexName => $field) {
