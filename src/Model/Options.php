@@ -2,6 +2,8 @@
 
 namespace IOLabs\Schema\Model;
 
+use ReflectionClass;
+
 /**
  * Class Options
  *
@@ -104,5 +106,24 @@ class Options
         $this->unsigned = $unsigned;
         
         return $this;
+    }
+    
+    /**
+     * @return array
+     * @throws \ReflectionException
+     */
+    public function toArray()
+    {
+        $methods = (new ReflectionClass(__CLASS__))->getMethods(\ReflectionMethod::IS_PUBLIC);
+        
+        $result = [];
+        array_walk($methods, function (\ReflectionMethod $method) use (&$result) {
+            if (strpos($method->getName(), 'get') === 0) {
+                $propName = strtolower($method->getName()[3]) . substr($method->getName(), 4);
+                $result[$propName] = $method->invoke($this);
+            }
+        });
+        
+        return $result;
     }
 }

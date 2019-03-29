@@ -1,16 +1,15 @@
 {
     "name": "iolabs/magento2-yaml-schema",
     "description": "Enables yaml database schemas in modules",
-    "type": "library",
+    "type": "magento2-module",
     "license": "MIT",
     "require": {
-        "symfony/yaml": "3.4",
         "doctrine/collections": "^1.6"
     },
     "authors": [
         {
             "name": "Leander Huysse",
-            "email": "info@iomedia.nl"
+            "email": "leander@iolabs.nl"
         }
     ],
     "autoload": {

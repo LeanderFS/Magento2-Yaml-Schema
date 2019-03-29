@@ -18,8 +18,8 @@ class TableHydrator
         $table = new Table();
         $table
             ->setName($tableName)
-            ->setIndexes($tableData['indexes'])
-            ->setForeignKeys($tableData['foreign_keys']);
+            ->setIndexes($tableData['indexes'] ?? [])
+            ->setForeignKeys($tableData['foreign_keys'] ?? []);
         
         foreach ($tableData['columns'] as $columnName => $columnData) {
             $column = new Column();
